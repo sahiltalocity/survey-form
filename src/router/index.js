@@ -1,11 +1,16 @@
 // Composables
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/Home-view.vue";
+import SurveyView from "@/views/survey-view.vue";
+import HomeView from "@/views/home-view.vue";
 
 const routes = [
   {
     path: "/",
     component: HomeView,
+  },
+  {
+    path: "/:id",
+    component: SurveyView,
   },
 ];
 

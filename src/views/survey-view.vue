@@ -306,6 +306,7 @@ onBeforeUnmount(() =>{
 <template>
     <div class="survey">
         <div class="survey-header">
+            <img class="header-logo" src="@/assets/adani_logo.png" alt="Adani group">
             <h1>
                 AGEL
             </h1> 
@@ -324,12 +325,6 @@ onBeforeUnmount(() =>{
                         <div class="slider-label"> 
                             Rate (1-4)
                         </div>
-                        <div v-if="width<1100" class="responsive-label-description">
-                            <p>(Strongly Disagree)</p>
-                            <p>(Disagree)</p>
-                            <p>(Agree)</p>
-                            <p>(Strongly Agree)</p>
-                        </div>
                         <v-slider
                             :rules="question.required?[required]:[]"
                             :ticks="width>=1100?tickLabels:tickLabelsResponsive"
@@ -341,6 +336,12 @@ onBeforeUnmount(() =>{
                             v-model="question.answer"
                             validate-on="input"
                         ></v-slider>
+                        <div v-if="width<1100" class="responsive-label-description">
+                            <p>Strongly Disagree</p>
+                            <p>Disagree</p>
+                            <p>Agree</p>
+                            <p>Strongly Agree</p>
+                        </div>
                     </div>
                     <div class="radio-buttons" v-else-if="question.type === 'radio-buttons'">
                         <v-radio-group 
@@ -388,6 +389,10 @@ onBeforeUnmount(() =>{
 </template>
 <style scoped>
 
+.header-logo{
+    height: 80px;
+    margin-bottom: 20px;
+}
 .uuid-error-message{
     display: flex;
     min-height: 500px;

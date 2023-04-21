@@ -50,7 +50,12 @@ const submitForm = async () => {
             if(json.Error === "Key Not Found"){
                 uuidStatus.value={
                     valid:false,
-                    message:"Invalid Invite Code/Link"
+                    message:"Invalid Link"
+                }
+            } else if(json.Error === "Key has already been used"){
+                uuidStatus.value={
+                    valid:false,
+                    message:"You have already filled this form"
                 }
             } else {
                 uuidStatus.value={
@@ -301,11 +306,11 @@ onBeforeUnmount(() =>{
 <template>
     <div class="survey">
         <div class="survey-header">
-            <div class="back-button">
+            <!-- <div class="back-button">
                 <router-link to="/">
                     <v-btn icon="mdi-arrow-left-bold" variant="outlined" color="black" rounded="0"></v-btn>
                 </router-link>
-            </div>
+            </div> -->
             <h1>
                 AGEL: Employee Engagement Pulse Survey’23
             </h1> 

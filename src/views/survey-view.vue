@@ -465,8 +465,12 @@ onBeforeUnmount(() =>{
     display: flex;
     justify-content: space-between;
     gap:10px;
-    align-items: end;
+    align-items: baseline;
     margin-top: 10px;
+    margin-right:10px
+}
+.responsive-label-description p{
+    max-width: 20px;
 }
 .v-input__details{
     margin-top: 10px;
@@ -540,10 +544,10 @@ onBeforeUnmount(() =>{
         bottom:0
     }
 }
-@media only screen and (max-width: 350px){ 
+@media only screen and (max-width: 300px){ 
     .responsive-label-description p{
         text-align: center;
-        font-size: 8px;
+        font-size: 10px;
     }
 }
 </style>

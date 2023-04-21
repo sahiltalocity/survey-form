@@ -1,5 +1,5 @@
 <script setup>
-import {ref,computed, onMounted} from 'vue'
+import {ref, onBeforeUnmount, onMounted} from 'vue'
 import { useRoute } from 'vue-router';
 const route = useRoute()
 
@@ -276,10 +276,14 @@ const questions = ref([
         wordLimit150:true,
     },
 ])
+const checkScreenSize = () => {
+    width.value = window.innerWidth;
+}
 onMounted(() =>{
-    window.addEventListener('resize', ()=>{
-        width.value = window.innerWidth;
-    });
+    window.addEventListener('resize', checkScreenSize);
+})
+onBeforeUnmount(() =>{
+    window.removeEventListener('resize', checkScreenSize);
 })
 </script>
 <template>

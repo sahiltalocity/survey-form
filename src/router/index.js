@@ -9,7 +9,7 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/:id",
+    path: "/survey/:id",
     component: SurveyView,
     name: "survey",
   },

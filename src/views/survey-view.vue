@@ -383,7 +383,7 @@ onBeforeUnmount(() =>{
             <p>
                 Powered by 
             </p> 
-            <img src="@/assets/logo.png"/>
+            <img src="@/assets/talocity_logo.png"/>
         </a>
     </div>
 </template>
@@ -460,6 +460,7 @@ onBeforeUnmount(() =>{
     justify-content: center;
     width: 100%;
     margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .responsive-label-description{
     display: flex;
@@ -487,7 +488,7 @@ onBeforeUnmount(() =>{
     gap:10px;
     padding: 5px;
     box-shadow:0.5px 0.5px 0.5px 0.5px grey;
-    font-size: 14px;
+    font-size: 10px;
     background: #fff;
 }
 .branding img{

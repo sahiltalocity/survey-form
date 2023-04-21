@@ -370,10 +370,12 @@ onMounted(() =>{
     padding: 20px;
 }
 .back-button{
-    text-decoration: none;
     position: absolute;
     left: 20px;
     top: 20px;
+}
+.back-button a{
+    text-decoration: none;
 }
 .survey-header span{
     font-size: 14px;

@@ -287,83 +287,90 @@ onBeforeUnmount(() =>{
 })
 </script>
 <template>
-    <div class="survey-header">
-        <div class="back-button">
-            <router-link to="/">
-                <v-btn icon="mdi-arrow-left-bold" variant="outlined" color="black" rounded="0"></v-btn>
-            </router-link>
-        </div>
-        <h1>
-            AGEL: Employee Engagement Pulse Survey’23
-        </h1> 
-        <span>Powered by Talocity</span>
-    </div>
-    <v-app class="survey-form">
-        <v-form validate-on="submit" @submit.prevent="submitForm" ref="form" lazy-validation>
-            <div class="survey-block" v-for="(question,index) in questions" :key="`question-${index}`">
-                <div class="survey-question">
-                    {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in maximum 150 words)":"" }}
-                </div>
-                <div class="number-slider" v-if="question.type === 'number-slider'">
-                    <div class="slider-label"> 
-                        Rate (1-4)
-                    </div>
-                    <v-slider
-                        :rules="question.required?[required]:[]"
-                        :ticks="width>=1100?tickLabels:tickLabelsResponsive"
-                        :max="4"
-                        :min="1"
-                        :step="1"
-                        show-ticks="always"
-                        :tick-size="4"
-                        v-model="question.answer"
-                        validate-on="input"
-                    ></v-slider>
-                    <div class="slider-label-description" v-if="width<1100">
-                            <p>1: Strongly Disagree</p>
-                            <p>2: Disagree</p>
-                            <p>3: Agree</p>
-                            <p>4: Strongly Agree</p>
-                        </div>
-                </div>
-                <div class="radio-buttons" v-else-if="question.type === 'radio-buttons'">
-                    <v-radio-group 
-                        v-model="question.answer" 
-                        :rules="question.required?[required]:[]" 
-                        inline
-                        validate-on="input"
-                    >
-                        <v-radio label="Yes" :value="true"></v-radio>
-                        <v-radio label="No" :value="false"></v-radio>
-                    </v-radio-group>
-                </div>
-                <div class="text-editor" style="{width:100%}" v-else-if="question.type === 'text-editor'">
-                    <v-col
-                        cols="12"
-                        sm="6"
-                    >
-                        <v-textarea
-                        :rules="[question.required?required:'',question.wordLimit150?wordLimit150:'']"
-                        
-                        :label="`Type your response...${question.maxWords?` (in ${question.maxWords} words)`:''}`"
-                        auto-grow
-                        variant="outlined"
-                        rows="3"
-                        row-height="25"
-                        shaped
-                        v-model="question.answer"
-                        validate-on="input"
-                        ></v-textarea>
-                    </v-col>
-                </div>
-            </div>    
-            <div class="survey-buttons">
-                <v-btn rounded="4" type="submit" @click="submitForm" color="black">Submit</v-btn>
+    <div class="survey">
+        <div class="survey-header">
+            <div class="back-button">
+                <router-link to="/">
+                    <v-btn icon="mdi-arrow-left-bold" variant="outlined" color="black" rounded="0"></v-btn>
+                </router-link>
             </div>
-        </v-form>
-    </v-app>
+            <h1>
+                AGEL: Employee Engagement Pulse Survey’23
+            </h1> 
+            <span>Powered by Talocity</span>
+        </div>
+        <v-app class="survey-form">
+            <v-form validate-on="submit" @submit.prevent="submitForm" ref="form" lazy-validation>
+                <div class="survey-block" v-for="(question,index) in questions" :key="`question-${index}`">
+                    <div class="survey-question">
+                        {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in maximum 150 words)":"" }}
+                    </div>
+                    <div class="number-slider" v-if="question.type === 'number-slider'">
+                        <div class="slider-label"> 
+                            Rate (1-4)
+                        </div>
+                        <v-slider
+                            :rules="question.required?[required]:[]"
+                            :ticks="width>=1100?tickLabels:tickLabelsResponsive"
+                            :max="4"
+                            :min="1"
+                            :step="1"
+                            show-ticks="always"
+                            :tick-size="4"
+                            v-model="question.answer"
+                            validate-on="input"
+                        ></v-slider>
+                        <div class="slider-label-description" v-if="width<1100">
+                                <p>1: Strongly Disagree</p>
+                                <p>2: Disagree</p>
+                                <p>3: Agree</p>
+                                <p>4: Strongly Agree</p>
+                            </div>
+                    </div>
+                    <div class="radio-buttons" v-else-if="question.type === 'radio-buttons'">
+                        <v-radio-group 
+                            v-model="question.answer" 
+                            :rules="question.required?[required]:[]" 
+                            inline
+                            validate-on="input"
+                        >
+                            <v-radio label="Yes" :value="true"></v-radio>
+                            <v-radio label="No" :value="false"></v-radio>
+                        </v-radio-group>
+                    </div>
+                    <div class="text-editor" style="{width:100%}" v-else-if="question.type === 'text-editor'">
+                        <v-col
+                            cols="12"
+                            sm="6"
+                        >
+                            <v-textarea
+                            :rules="[question.required?required:'',question.wordLimit150?wordLimit150:'']"
+                            
+                            :label="`Type your response...${question.maxWords?` (in ${question.maxWords} words)`:''}`"
+                            auto-grow
+                            variant="outlined"
+                            rows="3"
+                            row-height="25"
+                            shaped
+                            v-model="question.answer"
+                            validate-on="input"
+                            ></v-textarea>
+                        </v-col>
+                    </div>
+                </div>    
+                <div class="survey-buttons">
+                    <v-btn rounded="4" type="submit" @click="submitForm" color="black">Submit</v-btn>
+                </div>
+            </v-form>
+        </v-app>
+    </div>
 </template>
 <style scoped>
+.survey{
+    box-sizing: border-box;
+    margin: 0;
+    overflow-x: hidden;
+}
 .survey-header{
     position: relative;
     width: 100%;

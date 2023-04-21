@@ -11,6 +11,7 @@ const routes = [
   {
     path: "/:id",
     component: SurveyView,
+    name: "survey",
   },
 ];
 

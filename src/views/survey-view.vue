@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue'
+import {ref,computed, onMounted} from 'vue'
 import { useRoute } from 'vue-router';
 const route = useRoute()
 
@@ -8,6 +8,13 @@ const tickLabels = {
 	2: '2 (Disagree)',
 	3: '3 (Agree)',
 	4: '4 (Strongly Agree)',
+};
+let width = ref(screen.width);
+const tickLabelsResponsive = {
+	1: '1',
+	2: '2',
+	3: '3',
+	4: '4',
 };
 
 const form = ref(null);
@@ -21,7 +28,7 @@ const convertToResponse = (questions) => {
             response.value = {
                 ...response.value,
                 [`question_${question.id}`]:question.question,
-                [`answer_${question.id}`]:question.type==="number-slider"?question.answer+1:question.answer,
+                [`answer_${question.id}`]:question.answer,
             }
         }
     });
@@ -269,12 +276,21 @@ const questions = ref([
         wordLimit150:true,
     },
 ])
-
+onMounted(() =>{
+    window.addEventListener('resize', ()=>{
+        width.value = window.innerWidth;
+    });
+})
 </script>
 <template>
     <div class="survey-header">
+        <div class="back-button">
+            <router-link to="/">
+                <v-btn icon="mdi-arrow-left-bold" variant="outlined" color="black" rounded="0"></v-btn>
+            </router-link>
+        </div>
         <h1>
-            Survey Form - Adani Group
+            AGEL: Employee Engagement Pulse Survey’23
         </h1> 
         <span>Powered by Talocity</span>
     </div>
@@ -282,7 +298,7 @@ const questions = ref([
         <v-form validate-on="submit" @submit.prevent="submitForm" ref="form" lazy-validation>
             <div class="survey-block" v-for="(question,index) in questions" :key="`question-${index}`">
                 <div class="survey-question">
-                    {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in 150 words)":"" }}
+                    {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in maximum 150 words)":"" }}
                 </div>
                 <div class="number-slider" v-if="question.type === 'number-slider'">
                     <div class="slider-label"> 
@@ -290,7 +306,7 @@ const questions = ref([
                     </div>
                     <v-slider
                         :rules="question.required?[required]:[]"
-                        :ticks="tickLabels"
+                        :ticks="width>=1100?tickLabels:tickLabelsResponsive"
                         :max="4"
                         :min="1"
                         :step="1"
@@ -299,6 +315,12 @@ const questions = ref([
                         v-model="question.answer"
                         validate-on="input"
                     ></v-slider>
+                    <div class="slider-label-description" v-if="width<1100">
+                            <p>1: Strongly Disagree</p>
+                            <p>2: Disagree</p>
+                            <p>3: Agree</p>
+                            <p>4: Strongly Agree</p>
+                        </div>
                 </div>
                 <div class="radio-buttons" v-else-if="question.type === 'radio-buttons'">
                     <v-radio-group 
@@ -330,22 +352,27 @@ const questions = ref([
                         ></v-textarea>
                     </v-col>
                 </div>
-                <!-- {{ question.response }} -->
             </div>    
             <div class="survey-buttons">
-                <v-btn rounded="4" type="submit" @click="submitForm" color="blue">Submit</v-btn>
+                <v-btn rounded="4" type="submit" @click="submitForm" color="black">Submit</v-btn>
             </div>
         </v-form>
     </v-app>
 </template>
 <style scoped>
 .survey-header{
+    position: relative;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+.back-button{
+    position: absolute;
+    left: 20px;
+    top: 20px;
 }
 .survey-header span{
     font-size: 14px;
@@ -388,5 +415,38 @@ const questions = ref([
 
 .v-input__details{
     margin-top: 10px;
+}
+
+@media only screen and (max-width: 1100px){ 
+    .slider-label{
+        text-align: center;
+        font-weight: bold;
+    }
+    .slider-label-description{
+        font-weight: lighter;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .back-button{
+        position: relative;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        width: 100%;
+        margin: 0 auto 40px auto;
+    }
+    .survey-header{
+        text-align: center;
+        padding: 10px;
+    }
+    .number-slider{
+        flex-direction: column;
+        justify-items: center;
+        align-items: normal;
+        gap:0;
+        margin: 20px 0;
+    }
 }
 </style>

@@ -1,28 +1,39 @@
 <script setup>
-	import {ref} from 'vue'
-	import { useRouter } from 'vue-router';
+	import {ref,onMounted} from 'vue'
+	import { useRouter, useRoute } from 'vue-router';
+
 	const router = useRouter()
-	const form = ref(null);
-	const code = ref();
+	const route = useRoute()
+	const code = ref(route.query?.invite);
+	const form = ref(null)
+
 	const submit = async() => {
 		const validate = await form.value.validate();
 		if(validate.valid){
-			return router.push(code.value)
+			return router.push({name:'survey',params:{id:code.value}})
 		} else{
 			return
 		}
 	}
+	onMounted(()=>{
+		if(route.query?.invite){
+			submit()
+		}
+	})
 </script>
 <template>
-		<v-app class="form">
+	<div class="form">
+		<v-app>
 			<v-form class="form-field" @submit.prevent="submit" ref="form">
 				<v-text-field v-model="code" :rules="[value => !!value || 'This cannot be empty']" label="Enter Invite Code" variant="outlined"></v-text-field>
 				<v-btn type="submit" size="large" variant="outlined" rounded="0" icon="mdi-arrow-right-bold "></v-btn>
 			</v-form>
 		</v-app>
+	</div>
 </template>
 <style scoped>
 .form{
+	position: relative;
     width: 75%;
 	min-height: 100vh;
     padding-top: 20px;

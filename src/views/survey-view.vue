@@ -3,19 +3,25 @@ import {ref, onBeforeUnmount, onMounted} from 'vue'
 import { useRoute } from 'vue-router';
 const route = useRoute()
 
-const tickLabels = {
-	1: '1 (Strongly Disagree)',
-	2: '2 (Disagree)',
-	3: '3 (Agree)',
-	4: '4 (Strongly Agree)',
-};
+const tickLabels = [
+    {
+        label:'Strongly Disagree',
+        value:1
+    },
+    {
+        label:'Disagree',
+        value:2
+    },
+    {
+        label:'Agree',
+        value:3
+    },
+    {
+        label:'Strongly Agree',
+        value:4
+    }
+]
 let width = ref(screen.width);
-const tickLabelsResponsive = {
-	1: '1',
-	2: '2',
-	3: '3',
-	4: '4',
-};
 
 const form = ref(null);
 const uuid = route.params.id
@@ -70,212 +76,37 @@ const submitForm = async () => {
         return
     }
 }
-const required =  value => !!value || 'This cannot be empty'
+const required = (error) => value => !!value || error
 const wordLimit150 = value => (value?.split('').filter(c=>c===' ') || [] ).length <= 149 || 'This must be 150 words or less'
-// const questions = ref([
-//     {
-//         id:1,
-//         question: 'I would recommend Adani to friends and family as a great place to work',
-//         type:'radio-buttons',
-//         required:true,
-//     },
-//     {
-//         id:2,
-//         question: 'I feel excited about coming to work',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:3,
-//         question: 'I am proud of working with Adani',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:4,
-//         question: 'I am satisfied with your current compensation and benefits?',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:5,
-//         question: 'I enjoy working with my team',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:6,
-//         question: 'My work at Adani is meaningful',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:7,
-//         question: 'I feel comfortable asking for help if I don’t have the skills required to meet my goals',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:8,
-//         question: 'Adani’s vision and values inspire me',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:9,
-//         question: 'My manager provides recognition for my accomplishments at work',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:10,
-//         question: 'I believe my manager is invested in my success',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:11,
-//         question: 'My Company’s culture fosters a comfortable, supportive work environment',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:12,
-//         question: 'I plan to be working at my organization two years from now.',
-//         type:'radio-buttons',
-//         required:false,
-//     },
-//     {
-//         id:13,
-//         question: 'My work challenges me and aids in my development',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:14,
-//         question: 'I am able to see a clear path for my career advancement at Adani',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:15,
-//         question: 'Recently I have thought about leaving Adani',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:16,
-//         question: 'The leadership at Adani asked about and expressed support for my career goals',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:17,
-//         question: 'I am often stressed with deadlines and workloads',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:18,
-//         question: 'My weekends and holidays are spent on work related priorities',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:19,
-//         question: 'Facilities available at my site are supportive of my health and hygiene',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:20,
-//         question: 'My commute to work is comfortable',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:21,
-//         question: 'Safety and Security of my work site is up to global standards',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:22,
-//         question: 'My workplace has safe & hygienic restrooms, workspaces and commute',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:23,
-//         question: 'My workplace is close to cities that are supportive of my family’s wellbeing (Schooling, Medical, Connectivity, Basic necessities etc)',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:24,
-//         question: 'I am provided with all the necessary tools to do my job right',
-//         type:'number-slider',
-//         required:false,
-//     },
-//     {
-//         id:25,
-//         question: 'What practices do we need to change?',
-//         type:'text-editor',
-//         required:true,
-//     },
-//     {
-//         id:26,
-//         question: 'Are there any problems with our culture?',
-//         type:'text-editor',
-//         required:false,
-//     },
-//     {
-//         id:27,
-//         question: 'How can we help improve your engagement at work?',
-//         type:'text-editor',
-//         required:false,
-//     },
-//     {
-//         id:28,
-//         question: 'Is there anything else you would like to share that you find important to your employee experience here at Adani?',
-//         type:'text-editor',
-//         required:false,
-//     },
-// ])
 const questions = ref([
     {
         id:1,
-        question: 'I have clarity on my work and adequate resources (tools, materials, equipment ) to perform my job well',
-        type:'number-slider',
-        answer:1,
+        question: 'I have clarity on my work and adequate resources (tools, materials, equipment) to perform my job well',
+        type:'radio-buttons',
         required:true,
     },
     {
         id:2,
         question: 'I have conducive environment to learn and focus on my individual development and well-being',
-        type:'number-slider',
-        answer:1,
+        type:'radio-buttons',
         required:true,
     },
     {
         id:3,
         question: 'My manager treats me well and is fair, objective and interested in my career growth',
-        type:'number-slider',
-        answer:1,
+        type:'radio-buttons',
         required:true,
     },
     {
         id:4,
         question: 'Working conditions and safety practices on site are satisfactory',
-        type:'number-slider',
-        answer:1,
+        type:'radio-buttons',
         required:true,
     },
     {
         id:5,
         question: 'I feel this organization is the right place to fulfil my career aspirations',
-        type:'number-slider',
-        answer:1,
+        type:'radio-buttons',
         required:true,
     },
     {
@@ -321,7 +152,7 @@ onBeforeUnmount(() =>{
                     <div class="survey-question">
                         {{ question.id }}. {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in maximum 150 words)":"" }}
                     </div>
-                    <div class="number-slider" v-if="question.type === 'number-slider'">
+                    <!-- <div class="number-slider" v-if="question.type === 'number-slider'">
                         <div class="slider-label"> 
                             Rate (1-4)
                         </div>
@@ -342,25 +173,36 @@ onBeforeUnmount(() =>{
                             <p>Agree</p>
                             <p>Strongly Agree</p>
                         </div>
-                    </div>
-                    <div class="radio-buttons" v-else-if="question.type === 'radio-buttons'">
+                    </div> -->
+                    <div class="radio-buttons" v-if="question.type === 'radio-buttons'">
+                        <!-- <div class="slider-label"> 
+                            Rate (1-4)
+                        </div> -->
                         <v-radio-group 
                             v-model="question.answer" 
-                            :rules="question.required?[required]:[]" 
+                            :rules="question.required?[required('Select any one option')]:[]" 
                             inline
                             validate-on="input"
+                            class="radio-group"
                         >
-                            <v-radio label="Yes" :value="true"></v-radio>
-                            <v-radio label="No" :value="false"></v-radio>
+                            <v-radio class="radio-button" :value="elem.value" :key="`button-${question.id}-${elem.value}`" v-for="elem of tickLabels">
+                                <template #label>
+                                    <div class="radio-label">
+                                        {{ elem.value}}<br/>
+                                        {{elem.label}}
+                                    </div>
+                                    
+                                </template>
+                            </v-radio>
                         </v-radio-group>
+                        <!-- {{ question.answer }} -->
                     </div>
                     <div class="text-editor" style="{width:100%}" v-else-if="question.type === 'text-editor'">
                         <v-col
                             cols="12"
-                            sm="6"
                         >
                             <v-textarea
-                            :rules="[question.required?required:'',question.wordLimit150?wordLimit150:'']"
+                            :rules="[question.required?required('This cannot be empty'):'',question.wordLimit150?wordLimit150:'']"
                             onpaste="return false"
                             :label="`Type your response...${question.maxWords?` (in ${question.maxWords} words)`:''}`"
                             auto-grow
@@ -388,7 +230,9 @@ onBeforeUnmount(() =>{
     </div>
 </template>
 <style scoped>
-
+.slider-label{
+    min-width: 100px;
+}
 .header-logo{
     height: 80px;
     margin-bottom: 20px;
@@ -414,6 +258,15 @@ onBeforeUnmount(() =>{
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+.radio-button{
+    text-align: center;
+}
+
+.radio-buttons{
+    display: flex;
+    gap:30px;
+    align-items: center;
 }
 .back-button{
     position: absolute;
@@ -443,8 +296,11 @@ onBeforeUnmount(() =>{
 .v-messages__message{
     margin-top: 20px;
 }
-.survey-block .text-editor, .survey-block .radio-buttons{
-    margin-bottom: 10px;
+.survey-block .text-editor{
+    margin-bottom: 30px;
+}
+.survey-block .radio-buttons{
+    margin: 20px 0px 30px 0
 }
 .number-slider{
     display: flex;
@@ -469,9 +325,7 @@ onBeforeUnmount(() =>{
     margin-right:10px;
     margin-left:-10px
 }
-.responsive-label-description p{
-    max-width: 20px;
-}
+
 .v-input__details{
     margin-top: 10px;
 }
@@ -493,6 +347,15 @@ onBeforeUnmount(() =>{
 .branding img{
     height: 25px;
     width:auto;
+}
+.radio-group{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-direction: column;
+}
+.radio-label{
+    color: #000;
 }
 
 @media only screen and (max-width: 1100px){ 
@@ -533,6 +396,11 @@ onBeforeUnmount(() =>{
     .responsive-label-description p{
         text-align: center;
         font-size: 16px;
+        max-width: 20px;
+    }
+    .radio-label{
+        text-align: center;
+        font-size: 12px;
     }
 }
 @media only screen and (max-width: 650px){ 
@@ -544,8 +412,8 @@ onBeforeUnmount(() =>{
         bottom:0
     }
 }
-@media only screen and (max-width: 300px){ 
-    .responsive-label-description p{
+@media only screen and (max-width: 500px){ 
+    .radio-label{
         text-align: center;
         font-size: 10px;
     }

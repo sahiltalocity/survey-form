@@ -1,0 +1,18 @@
+.v-selection-control--inline {
+  display: flex;
+  flex-direction: column;
+}
+.v-selection-control-group--inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-between;
+  margin: auto;
+}
+.v-radio-group > .v-input__control {
+  flex-direction: column;
+  width: 100%;
+}
+.v-messages__message {
+  text-align: center;
+}

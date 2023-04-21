@@ -370,6 +370,7 @@ onBeforeUnmount(() =>{
     box-sizing: border-box;
     margin: 0;
     overflow-x: hidden;
+    max-width:100vw
 }
 .survey-header{
     position: relative;

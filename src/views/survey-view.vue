@@ -459,8 +459,7 @@ onBeforeUnmount(() =>{
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-bottom: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 .responsive-label-description{
     display: flex;

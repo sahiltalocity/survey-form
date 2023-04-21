@@ -370,6 +370,7 @@ onMounted(() =>{
     padding: 20px;
 }
 .back-button{
+    text-decoration: none;
     position: absolute;
     left: 20px;
     top: 20px;

@@ -319,7 +319,7 @@ onBeforeUnmount(() =>{
             <v-form validate-on="submit" @submit.prevent="submitForm" ref="form" lazy-validation>
                 <div class="survey-block" v-for="(question,index) in questions" :key="`question-${index}`">
                     <div class="survey-question">
-                        {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in maximum 150 words)":"" }}
+                        {{ question.id }}. {{ question.required?"(MANDATORY)":"" }} {{ question.question }}{{ question.wordLimit150?" (in maximum 150 words)":"" }}
                     </div>
                     <div class="number-slider" v-if="question.type === 'number-slider'">
                         <div class="slider-label"> 

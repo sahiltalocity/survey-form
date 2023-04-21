@@ -245,28 +245,28 @@ const wordLimit150 = value => (value?.split('').filter(c=>c===' ') || [] ).lengt
 const questions = ref([
     {
         id:1,
-        question: 'I have clarity on my work and  adequate resources (Tools, Materials, Equipment ) to perform my job well',
+        question: 'I have clarity on my work and adequate resources (tools, materials, equipment ) to perform my job well',
         type:'number-slider',
         answer:1,
         required:true,
     },
     {
         id:2,
-        question: 'I have conducive environment to Learn and focus on my Individual Development and Well-being',
+        question: 'I have conducive environment to learn and focus on my individual development and well-being',
         type:'number-slider',
         answer:1,
         required:true,
     },
     {
         id:3,
-        question: 'My Manager treats me well and is fair, objective and interested in my Career Growth',
+        question: 'My manager treats me well and is fair, objective and interested in my career growth',
         type:'number-slider',
         answer:1,
         required:true,
     },
     {
         id:4,
-        question: 'Working conditions and Safety Practices on site are satisfactory',
+        question: 'Working conditions and safety practices on site are satisfactory',
         type:'number-slider',
         answer:1,
         required:true,
@@ -280,14 +280,14 @@ const questions = ref([
     },
     {
         id:6,
-        question: 'What do you like most about your job and work in our organization?',
+        question: 'What do you like most about your job and work, in our organization?',
         type:'text-editor',
         required:true,
         wordLimit150:true,
     },
     {
         id:7,
-        question: 'What do you like least about your job and work in our organization?',
+        question: 'What do you like least about your job and work, in our organization?',
         type:'text-editor',
         required:true,
         wordLimit150:true,
@@ -312,8 +312,9 @@ onBeforeUnmount(() =>{
                 </router-link>
             </div> -->
             <h1>
-                AGEL: Employee Engagement Pulse Survey’23
+                AGEL
             </h1> 
+            <h2>Employee Engagement Pulse Survey’23</h2>
             <span>Powered by Talocity</span>
         </div>
         <div class="uuid-error-message" v-if="!uuidStatus.valid">

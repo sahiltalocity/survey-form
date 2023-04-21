@@ -466,8 +466,8 @@ onBeforeUnmount(() =>{
     justify-content: space-between;
     gap:10px;
     align-items: baseline;
-    margin-top: 10px;
-    margin-right:10px
+    margin-right:10px;
+    margin-left:-10px
 }
 .responsive-label-description p{
     max-width: 20px;

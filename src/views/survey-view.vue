@@ -19,6 +19,9 @@ const tickLabelsResponsive = {
 
 const form = ref(null);
 const uuid = route.params.id
+const uuidStatus = ref({
+    valid:true
+});
 const convertToResponse = (questions) => {
     const response = ref({
         uuid : uuid,
@@ -44,11 +47,20 @@ const submitForm = async () => {
             body: JSON.stringify(convertToResponse(questions.value))
             })
             const json = await response.json();
-            alert(json.message||json.Error);
+            if(json.Error === "Key Not Found"){
+                uuidStatus.value={
+                    valid:false,
+                    message:"Invalid Invite Code/Link"
+                }
+            } else {
+                uuidStatus.value={
+                    valid:false,
+                    message:"Thanks for your valuable feedback"
+                }
+            }
         } catch(e){
            return;
         }
-        
     } else{
         return
     }
@@ -299,7 +311,10 @@ onBeforeUnmount(() =>{
             </h1> 
             <span>Powered by Talocity</span>
         </div>
-        <v-app class="survey-form">
+        <div class="uuid-error-message" v-if="!uuidStatus.valid">
+            <h1>{{uuidStatus.message}}</h1>
+        </div>
+        <v-app class="survey-form" v-else>
             <v-form validate-on="submit" @submit.prevent="submitForm" ref="form" lazy-validation>
                 <div class="survey-block" v-for="(question,index) in questions" :key="`question-${index}`">
                     <div class="survey-question">
@@ -366,6 +381,14 @@ onBeforeUnmount(() =>{
     </div>
 </template>
 <style scoped>
+
+.uuid-error-message{
+    display: flex;
+    min-height: 500px;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
 .survey{
     box-sizing: border-box;
     margin: 0;

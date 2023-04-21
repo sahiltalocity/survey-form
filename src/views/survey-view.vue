@@ -41,7 +41,7 @@ const submitForm = async () => {
     const validate = await form.value.validate();
     if(validate.valid){
         try{
-            const response = await fetch(`http://65.0.81.220:8000/api/surveys/`, {
+            const response = await fetch(`https://adani-temp.talocity.ai/api/surveys/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(convertToResponse(questions.value))
@@ -306,16 +306,10 @@ onBeforeUnmount(() =>{
 <template>
     <div class="survey">
         <div class="survey-header">
-            <!-- <div class="back-button">
-                <router-link to="/">
-                    <v-btn icon="mdi-arrow-left-bold" variant="outlined" color="black" rounded="0"></v-btn>
-                </router-link>
-            </div> -->
             <h1>
                 AGEL
             </h1> 
             <h2>Employee Engagement Pulse Survey’23</h2>
-            <span>Powered by Talocity</span>
         </div>
         <div class="uuid-error-message" v-if="!uuidStatus.valid">
             <h1>{{uuidStatus.message}}</h1>
@@ -330,6 +324,12 @@ onBeforeUnmount(() =>{
                         <div class="slider-label"> 
                             Rate (1-4)
                         </div>
+                        <div v-if="width<1100" class="responsive-label-description">
+                            <p>(Strongly Disagree)</p>
+                            <p>(Disagree)</p>
+                            <p>(Agree)</p>
+                            <p>(Strongly Agree)</p>
+                        </div>
                         <v-slider
                             :rules="question.required?[required]:[]"
                             :ticks="width>=1100?tickLabels:tickLabelsResponsive"
@@ -341,12 +341,6 @@ onBeforeUnmount(() =>{
                             v-model="question.answer"
                             validate-on="input"
                         ></v-slider>
-                        <div class="slider-label-description" v-if="width<1100">
-                                <p>1: Strongly Disagree</p>
-                                <p>2: Disagree</p>
-                                <p>3: Agree</p>
-                                <p>4: Strongly Agree</p>
-                            </div>
                     </div>
                     <div class="radio-buttons" v-else-if="question.type === 'radio-buttons'">
                         <v-radio-group 
@@ -366,7 +360,7 @@ onBeforeUnmount(() =>{
                         >
                             <v-textarea
                             :rules="[question.required?required:'',question.wordLimit150?wordLimit150:'']"
-                            
+                            onpaste="return false"
                             :label="`Type your response...${question.maxWords?` (in ${question.maxWords} words)`:''}`"
                             auto-grow
                             variant="outlined"
@@ -384,6 +378,12 @@ onBeforeUnmount(() =>{
                 </div>
             </v-form>
         </v-app>
+        <a href="https://talocity.ai" target="_blank" class="branding">
+            <p>
+                Powered by 
+            </p> 
+            <img src="@/assets/logo.png"/>
+        </a>
     </div>
 </template>
 <style scoped>
@@ -456,9 +456,34 @@ onBeforeUnmount(() =>{
     width: 100%;
     margin-bottom: 20px;
 }
-
+.responsive-label-description{
+    display: flex;
+    justify-content: space-between;
+    gap:10px;
+    align-items: end;
+    margin-top: 10px;
+}
 .v-input__details{
     margin-top: 10px;
+}
+.branding{
+    text-decoration: none;
+    color:black;
+    position: fixed;
+    z-index: 100;
+    bottom: 20px;
+    right:0;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    padding: 5px;
+    box-shadow:0.5px 0.5px 0.5px 0.5px grey;
+    font-size: 14px;
+    background: #fff;
+}
+.branding img{
+    height: 25px;
+    width:auto;
 }
 
 @media only screen and (max-width: 1100px){ 
@@ -472,6 +497,7 @@ onBeforeUnmount(() =>{
         flex-direction: column;
         align-items: center;
     }
+
     .back-button{
         position: relative;
         margin-bottom: 40px;
@@ -491,6 +517,28 @@ onBeforeUnmount(() =>{
         align-items: normal;
         gap:0;
         margin: 20px 0;
+    }
+    .v-slider-track__tick-label{
+        font-size: 10px;
+    }
+    .responsive-label-description p{
+        text-align: center;
+        font-size: 16px;
+    }
+}
+@media only screen and (max-width: 650px){ 
+    .responsive-label-description p{
+        text-align: center;
+        font-size: 12px;
+    }
+    .branding{
+        bottom:0
+    }
+}
+@media only screen and (max-width: 350px){ 
+    .responsive-label-description p{
+        text-align: center;
+        font-size: 8px;
     }
 }
 </style>

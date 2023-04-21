@@ -17,7 +17,6 @@
 	}
 	onMounted(()=>{
 		if(route.query?.survey){
-			console.log("mounted")
 			submit()
 		}
 	})

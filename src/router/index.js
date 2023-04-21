@@ -2,6 +2,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import SurveyView from "@/views/survey-view.vue";
 import HomeView from "@/views/home-view.vue";
+import ErrorView from "@/views/error-view.vue";
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: "/survey/:id",
     component: SurveyView,
     name: "survey",
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    component: ErrorView,
+    name: "error",
   },
 ];
 

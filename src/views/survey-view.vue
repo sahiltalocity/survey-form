@@ -5,72 +5,6 @@ const route = useRoute()
 
 //select language
 const showSelectLanguage = ref(true);
-const language = ref();
-const languageSelectForm = ref(null);
-const selectLanguage = async () => {
-    const validate = await languageSelectForm.value.validate();
-    if(validate.valid){
-        showSelectLanguage.value = false;
-    }
-}
-
-let width = ref(screen.width);
-
-const form = ref(null);
-const uuid = route.params.id
-const uuidStatus = ref({
-    valid:true
-});
-const convertToResponse = (questions) => {
-    const response = ref({
-        uuid : uuid,
-    });
-    questions.forEach(question=>{
-        if(question.answer){
-            response.value = {
-                ...response.value,
-                [`question_${question.id}`]:question.question,
-                [`answer_${question.id}`]:question.answer,
-            }
-        }
-    });
-    return response.value;
-}
-const submitForm = async () => {
-    const validate = await form.value.validate();
-    if(validate.valid){
-        try{
-            const response = await fetch(`https://adani-temp.talocity.ai/api/surveys/`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(convertToResponse(languageOptions.value[language.value].questions.value))
-            })
-            const json = await response.json();
-            if(json.Error === "Key Not Found"){
-                uuidStatus.value={
-                    valid:false,
-                    message:"Invalid Link"
-                }
-            } else if(json.Error === "Key has already been used"){
-                uuidStatus.value={
-                    valid:false,
-                    message:"You have already filled this form"
-                }
-            } else {
-                uuidStatus.value={
-                    valid:false,
-                    message:"Thanks for your valuable feedback"
-                }
-            }
-        } catch(e){
-           return;
-        }
-    } else{
-        return
-    }
-}
-const required = (error) => value => !!value || error
-const wordLimit150 = value => (value?.split('').filter(c=>c===' ') || [] ).length <= 149 || 'This must be 150 words or less'
 const languageOptions = ref({
     English:{
         questions:[
@@ -469,6 +403,73 @@ const languageOptions = ref({
         ]
     },
 });
+const language = ref();
+const languageSelectForm = ref(null);
+const selectLanguage = async () => {
+    const validate = await languageSelectForm.value.validate();
+    if(validate.valid){
+        showSelectLanguage.value = false;
+    }
+}
+
+let width = ref(screen.width);
+
+const form = ref(null);
+const uuid = route.params.id
+const uuidStatus = ref({
+    valid:true
+});
+const convertToResponse = (questions) => {
+    const response = ref({
+        uuid : uuid,
+    });
+    questions.forEach(question=>{
+        if(question.answer){
+            response.value = {
+                ...response.value,
+                [`question_${question.id}`]:question.question,
+                [`answer_${question.id}`]:question.answer,
+            }
+        }
+    });
+    return response.value;
+}
+
+const submitForm = async () => {
+    const validate = await form.value.validate();
+    if(validate.valid){
+        try{
+            const response = await fetch(`https://adani-temp.talocity.ai/api/surveys/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(convertToResponse(languageOptions.value[language.value].questions))
+            })
+            const json = await response.json();
+            if(json.Error === "Key Not Found"){
+                uuidStatus.value={
+                    valid:false,
+                    message:"Invalid Link"
+                }
+            } else if(json.Error === "Key has already been used"){
+                uuidStatus.value={
+                    valid:false,
+                    message:"You have already filled this form"
+                }
+            } else {
+                uuidStatus.value={
+                    valid:false,
+                    message:"Thanks for your valuable feedback"
+                }
+            }
+        } catch(e){
+           return;
+        }
+    } else{
+        return
+    }
+}
+const required = (error) => value => !!value || error
+const wordLimit150 = value => (value?.split('').filter(c=>c===' ') || [] ).length <= 149 || 'This must be 150 words or less'
 
 const checkScreenSize = () => {
     width.value = window.innerWidth;
@@ -589,7 +590,7 @@ onBeforeUnmount(() =>{
                         </div>
                     </div>    
                     <div class="survey-buttons">
-                        <v-btn rounded="4" type="submit" @click="submitForm" color="black">Submit</v-btn>
+                        <v-btn rounded="4" type="submit" color="black">Submit</v-btn>
                     </div>
                 </v-form>
             </v-app>

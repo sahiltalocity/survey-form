@@ -496,7 +496,7 @@ onBeforeUnmount(() =>{
             <v-app v-if="showSelectLanguage">
                 <v-form validate-on="submit" class="select-language" ref="languageSelectForm" @submit.prevent="selectLanguage" lazy-validation>
                     <v-select
-                        label="Select your preferred language..."
+                        label="Select language..."
                         :items="Object.keys(languageOptions)"
                         variant="outlined"
                         v-model="language"

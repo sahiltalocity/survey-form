@@ -422,6 +422,7 @@ const uuidStatus = ref({
 const convertToResponse = (questions) => {
     const response = ref({
         uuid : uuid,
+        language: language.value
     });
     questions.forEach(question=>{
         if(question.answer){
@@ -718,7 +719,7 @@ onBeforeUnmount(() =>{
     text-decoration: none;
     color:black;
     position: fixed;
-    z-index: 100;
+    z-index: 9999;
     bottom: 20px;
     right:0;
     display: flex;

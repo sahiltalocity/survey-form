@@ -31,8 +31,17 @@
 		</v-app>
 	</div> -->
 	<div class="invalid-link">
-		Invalid Link
+		<h1>
+                AGEL
+        </h1> 
+        <h2>Employee Engagement Pulse Survey’23</h2>
 	</div>
+	<a href="https://talocity.ai" target="_blank" class="branding">
+            <p>
+                Powered by 
+            </p> 
+            <img src="@/assets/talocity_logo.png"/>
+        </a>
 </template>
 <style scoped>
 .form{
@@ -53,7 +62,27 @@
 .invalid-link{
 	min-height: 500px;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+}
+.branding{
+    text-decoration: none;
+    color:black;
+    position: fixed;
+    z-index: 9999;
+    bottom: 20px;
+    right:0;
+    display: flex;
+    align-items: center;
+    gap:10px;
+    padding: 5px;
+    box-shadow:0.5px 0.5px 0.5px 0.5px grey;
+    font-size: 10px;
+    background: #fff;
+}
+.branding img{
+    height: 25px;
+    width:auto;
 }
 </style>

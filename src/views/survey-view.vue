@@ -469,7 +469,7 @@ const submitForm = async () => {
         return
     }
 }
-const required = (error) => value => !!value || error
+const required = (error) => value => !!value.trim() || error
 const wordLimit150 = value => (value?.split('').filter(c=>c===' ') || [] ).length <= 149 || 'This must be 150 words or less'
 
 const checkScreenSize = () => {

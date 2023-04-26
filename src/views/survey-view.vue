@@ -469,7 +469,8 @@ const submitForm = async () => {
         return
     }
 }
-const required = (error) => value => !!value.trim() || error
+const required = (error) => value => !! value || error
+const requiredDesc = (error) => value => !! value?.trim() || error
 const wordLimit150 = value => (value?.split('').filter(c=>c===' ') || [] ).length <= 149 || 'This must be 150 words or less'
 
 const checkScreenSize = () => {
@@ -576,7 +577,7 @@ onBeforeUnmount(() =>{
                                 cols="12"
                             >
                                 <v-textarea
-                                :rules="[question.required?required('This cannot be empty'):'',question.wordLimit150?wordLimit150:'']"
+                                :rules="[question.required?requiredDesc('This cannot be empty'):'',question.wordLimit150?wordLimit150:'']"
                                 onpaste="return false"
                                 :label="`Type your response...${question.maxWords?` (in ${question.maxWords} words)`:''}`"
                                 auto-grow

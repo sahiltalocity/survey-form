@@ -440,7 +440,7 @@ const submitForm = async () => {
     const validate = await form.value.validate();
     if(validate.valid){
         try{
-            const response = await fetch(`https://adani-temp.talocity.ai/api/surveys/`, {
+            const response = await fetch(`https://adani-temp.talocity.ai:8002/api/surveys/`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(convertToResponse(languageOptions.value[language.value].questions))
